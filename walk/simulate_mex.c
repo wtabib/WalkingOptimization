@@ -23,6 +23,12 @@ void mexFunction( int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[] )
   {
     mexErrMsgTxt("One input required to run this function");
   }
+
+  const int *dims = mxGetDimensions(prhs[0]);
+  const int nDims = mxGetNumberOfDimensions(prhs[0]);
+  const int rows = dims[0];
+  const int cols = dims[1];
+
   PARAMETER *params;
   int n_parameters;
   int i;
@@ -46,6 +52,14 @@ void mexFunction( int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[] )
 
   write_the_mrdplot_file( &sim );
   get_score( &sim );
+
+  int dimsOut[2];
+  dimsOut[0] = 1;
+  dimsOut[1] = 1;
+  plhs[0] = mxCreateNumericArray(2, dimsOut, mxDOUBLE_CLASS, mxREAL);
+  double * data = (double *) mxGetData(plhs[0]);
+  data[0] = 40;
+
 }
 
 /*****************************************************************************/

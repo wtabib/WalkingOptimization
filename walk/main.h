@@ -36,7 +36,6 @@ Defines, typedefs, and structs
 /* This is used to allocate sdfast state */
 #define MAX_N_SDFAST_STATE 100
 
-// foot status
 #define FOOT_ON_GROUND 0
 #define FOOT_SLIDING 1
 #define FOOT_IN_AIR 2
@@ -62,33 +61,31 @@ typedef struct parameter
 /******************************************************************/
 /******************************************************************/
 /******************************************************************/
-// Overall simulation structure.
 
 typedef struct {
 
-  // *** COMMON VARIABLES ACROSS ALL SIMULATIONS
 
-  double time_step; // controller time step    
-  double time;      // current time in simulation
-  int status;       // Are we CRASHED? 
+  double time_step; /* controller time step    */
+  double time;      /* current time in simulation*/
+  int status;       /* Are we CRASHED? */
 
-  // Joint angles
+  /* Joint angles */
   double pitch; /* angle of torso wrt vertical */
-  double hip_angle[2]; // 3D: hip_yaw[2], hip_roll[2], hip_pitch[2]
+  double hip_angle[2]; /* 3D: hip_yaw[2], hip_roll[2], hip_pitch[2]*/
   double knee_angle[2];
   double ankle_angle[2];
 
-  // commanded torques
-  double hip_command[2]; // 3D: hip_yaw_command[2], ...
+  /* commanded torques*/
+  double hip_command[2]; /* 3D: hip_yaw_command[2], ...*/
   double knee_command[2];
   double ankle_command[2];
 
-  // torques (actually applied)
+  /*torques (actually applied)*/
   double hip_torque[2];
   double knee_torque[2];
   double ankle_torque[2];
 
-  // torques limits
+  /* torques limits */
   double hip_torque_min[2];
   double hip_torque_max[2];
   double knee_torque_min[2];
@@ -96,40 +93,40 @@ typedef struct {
   double ankle_torque_min[2];
   double ankle_torque_max[2];
 
-  // Location of various body parts. */
+  /* Location of various body parts. */
   double head[3];
   double hip[3];
   double knee[2][3];
   double foot[2][3];
-  // These are link COM locations
+  /* These are link COM locations*/
   double torso[3];
   double thigh[2][3];
   double calf[2][3];
-  double com[3]; // total body COM
+  double com[3]; /* total body COM */
 
-  // absolute angles
+  /* absolute angles */
   double torso_abs_angle;
   double thigh_abs_angle[2];
   double calf_abs_angle[2];
 
-  // Angular velocities
+  /* Angular velocities */
   double pitchd;
   double hip_angled[2];
   double knee_angled[2];
   double ankle_angled[2];
 
-  // Linear velocities
+  /* Linear velocities*/
   double headd[3];
   double hipd[3];
   double kneed[2][3];
   double footd[2][3];
-  // These are COM velocities
+  /* These are COM velocities */
   double torsod[3];
   double thighd[2][3];
   double calfd[2][3];
   double comd[3];
 
-  // *** KINEMATIC AND DYNAMIC PARAMETERS
+  /* *** KINEMATIC AND DYNAMIC PARAMETERS*/
 
   double torso_length;
   double torso_cm;
@@ -147,27 +144,27 @@ typedef struct {
   double ankle_to_toe;
   double ankle_to_heel;
 
-  double head_offset[3]; // head relative to torso COM
-  double hip_offset[3];  // hip relative to torso COM
-  double knee_offset[3]; // knee relative to calf COM
-  double foot_offset[3]; // foot relative to calf COM
+  double head_offset[3]; /* head relative to torso COM*/
+  double hip_offset[3];  /* hip relative to torso COM*/
+  double knee_offset[3]; /* knee relative to calf COM*/
+  double foot_offset[3]; /* foot relative to calf COM*/
 
-  // *** DYNAMICS **************
+  /* *** DYNAMICS **************/
 
-  // Control bits
+  /* Control bits*/
   /* Flag to indicate both feet off the ground not allowed */
   int in_air_not_allowed; 
 
-  // SDFAST
+  /* SDFAST */
   int sdfast_flag; /* Flag to indicate dxt needs to be recalculated */
-  double sdfast_state[MAX_N_SDFAST_STATE]; // sdfast state
-  double sdfast_stated[MAX_N_SDFAST_STATE]; // derivative of sdfast state
+  double sdfast_state[MAX_N_SDFAST_STATE]; /* sdfast state */
+  double sdfast_stated[MAX_N_SDFAST_STATE]; /* derivative of sdfast state */
   int sdfast_integration_steps_per_control_step;
   double sdfast_ctol;
   double sdfast_baumgarte;
   double x_offset;
 
-  // Stuff for impact model
+  /* Stuff for impact model */
   int sdfast_model; /* Which model is multiple model system using? */
   int sdfast_integration_steps_per_control_step_impact;
   double ds_state[MAX_N_SDFAST_STATE];
@@ -177,27 +174,27 @@ typedef struct {
   int ss_foot_down;
   int foot_status[2];
 
-  // ground model
+  /* ground model */
   double ground_level;
 
-  // ground spring damper parameters
+  /* ground spring damper parameters */
   double gnd_k_z;
   double gnd_k_x;
   double gnd_b_z;
   double gnd_b_x;
 
-  // original ground contact point.
+  /* original ground contact point. */
   double foot_zero[2][3];
 
-  // ground forces
+  /* ground forces */
   double ground_force[2][3];
 
-  // knee limit
+  /* knee limit */
   double knee_limit;
   double knee_limit_k;
   double knee_limit_b;
 
-  // crash detection
+  /* crash detection */
   double hip_min;
   double hip_max;
 
@@ -208,19 +205,19 @@ typedef struct {
   /* force limits */
   double friction_cone_limit;
 
-  // *** CONTROLLER **************
+  /* *** CONTROLLER ************** */
 
-  // controller variables
+  /* controller variables */
   int controller_state;
   double state_start_time;
   double state_elapsed_time;
 
-  // gains xxx[torque][sensor]
+  /* gains xxx[torque][sensor]*/
   double pos_gains[N_CONTROLS][N_CTRL_INPUTS];
   double vel_gains[N_CONTROLS][N_CTRL_INPUTS];
   double int_gains[N_CONTROLS][N_CTRL_INPUTS];
 
-  // desired positions
+  /* desired positions */
   double head_d[3];
   double hip_d[3];
   double knee_d[2][3];
@@ -230,7 +227,7 @@ typedef struct {
   double knee_angle_d[2];
   double ankle_angle_d[2];
 
-  // desired velocities
+  /* desired velocities */
   double headd_d[3];
   double hipd_d[3];
   double kneed_d[2][3];
@@ -240,12 +237,12 @@ typedef struct {
   double knee_angled_d[2];
   double ankle_angled_d[2];
 
-  // integrated errors
+  /* integrated errors */
   double hip_integrated_error[2];
   double knee_integrated_error[2];
   double ankle_integrated_error[2];
 
-  // Torque feedforwards
+  /* Torque feedforwards */
   double hip_command_ff[2];
   double knee_command_ff[2];
   double ankle_command_ff[2];
@@ -255,7 +252,7 @@ typedef struct {
   int knee_servo_mode[2];
   int ankle_servo_mode[2];
 
-  // *** PATTERN GENERATION ****************
+  /* *** PATTERN GENERATION ****************/
 
   /* Initial posture */
   double wait_duration;
@@ -305,7 +302,7 @@ typedef struct {
   double stance_ka2; /* acceleration of knot */
   double stance_ankle_torque; /* How much to torque at stance angle */
 
-  // *** OPTIMIZATION PARAMETERS ***************
+  /* *** OPTIMIZATION PARAMETERS *************** */
 
   /* Objective function */
   double desired_speed;
@@ -349,13 +346,11 @@ typedef struct {
   char output_file[10000];
   int iter;
 
-  // *** MISCELLANEOUS ***********************
+  /* *** MISCELLANEOUS ***********************/
 
-  // simulation duration
+  /* simulation duration */
   double duration;
 
-  // random stuff
-  // Make this thread safe: random number generator seed for rand_r() and rand()
   int rand_seed;
   double rand_scale;
 

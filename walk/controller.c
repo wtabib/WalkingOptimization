@@ -16,14 +16,14 @@
 
 /* Controller states */
 #define UNKNOWN_STATE 0
-#define WAITING 1 // waiting for launch
-#define LAUNCH1 2 // first phase of launch (beginning walking)
-#define LAUNCH2 3 // second phase of launch
-#define L_SWING 4 // left foot swinging
-#define RL_STANCE 5 // double support, left foot leading
-#define R_SWING 6 // right foot swinging
-#define LR_STANCE 7 // double support, right foot leading
-#define STOP 8 // stop walking
+#define WAITING 1 /* waiting for launch */
+#define LAUNCH1 2 /* first phase of launch (beginning walking) */
+#define LAUNCH2 3 /* second phase of launch */
+#define L_SWING 4 /* left foot swinging */
+#define RL_STANCE 5 /* double support, left foot leading */
+#define R_SWING 6 /* right foot swinging */
+#define LR_STANCE 7 /* double support, right foot leading */
+#define STOP 8 /* stop walking */
 
 /* Servo modes: joint can be position controlled or torque controlled */
 #define PD_MODE 0
@@ -68,7 +68,7 @@ double one_step_cost( SIM *s )
 
   s->one_step_total_score = 0;
 
-  // sum of squared joint torques
+  /* sum of squared joint torques */
   s->one_step_torque_score = 0;
   s->one_step_torque_score += s->hip_command[LEFT]*s->hip_command[LEFT];
   s->one_step_torque_score += s->hip_command[RIGHT]*s->hip_command[RIGHT];
@@ -78,20 +78,20 @@ double one_step_cost( SIM *s )
   s->one_step_torque_score += s->ankle_command[RIGHT]*s->ankle_command[RIGHT];
   s->one_step_torque_score *= s->torque_penalty_weight;
 
-  // penalty on knee going backwards
+  /* penalty on knee going backwards */
   s->one_step_knee_score = 0;
   if ( s->knee_angle_d[LEFT] > 0 )
     s->one_step_knee_score += s->knee_angle_d[LEFT]*s->knee_angle_d[LEFT];
   if ( s->knee_angle_d[RIGHT] > 0 )
     s->one_step_knee_score += s->knee_angle_d[RIGHT]*s->knee_angle_d[RIGHT];
 
-  // penalty on head movement deviating from desired speed
-  // could be hipd[XX] instead
+  /* penalty on head movement deviating from desired speed */
+  /* could be hipd[XX] instead */
   s->one_step_speed_score = (s->desired_speed - s->headd[XX])
     *(s->desired_speed - s->headd[XX])
     *s->speed_penalty_weight;
 
-  // penalty on inadequate ground clearance
+  /* penalty on inadequate ground clearance */
   s->one_step_clearance_score = 0;
   if ( s->ground_force[LEFT][ZZ] <= 0 && s->foot[LEFT][ZZ] < s->clearance )
     s->one_step_clearance_score += (s->foot[LEFT][ZZ] - s->clearance)
@@ -101,7 +101,7 @@ double one_step_cost( SIM *s )
       *(s->foot[RIGHT][ZZ] - s->clearance);
   s->one_step_clearance_score *= s->clearance_penalty_weight;
 
-  // penalty on excessive foot forces
+  /* penalty on excessive foot forces */
   s->one_step_f_x_score = 0;
   for ( i = LEFT; i <= RIGHT; i++ )
     s->one_step_f_x_score += s->ground_force[i][XX]*s->ground_force[i][XX];
@@ -111,10 +111,10 @@ double one_step_cost( SIM *s )
     (total_z_force - s->total_weight_in_newtons);
   s->one_step_f_z_score *= s->f_z_penalty_weight;
 
-  // penalty on torso angle
+  /* penalty on torso angle */
   s->one_step_pitchd_score = s->pitchd*s->pitchd*s->pitchd_penalty_weight;
 
-  // penalty on crashing
+  /* penalty on crashing*/
   s->one_step_crashed_score = 0;
   if ( s->status == CRASHED )
     s->one_step_crashed_score = 
@@ -258,7 +258,7 @@ int reinit_sim( SIM *s )
   s->knee_angled[RIGHT] = 0;
 
   /* Make it fall */
-  // s->pitchd = 1.0;
+  /* s->pitchd = 1.0;*/
 
   /* Indicate foot zero positions not set */
   s->foot_zero[LEFT][ZZ] = 1.0;
@@ -649,9 +649,8 @@ run_state_machine( SIM *s )
   switch( s->controller_state )
     {
     case WAITING:
-      // printf( "WAITING: %g %g\n", s->time, s->wait_duration );
       if ( s->time >= s->wait_duration )
-	{ // do transition
+	{ /* do transition*/
 	  s->controller_state = LAUNCH1;
 	  s->state_start_time = s->time;
 	  if ( s->controller_print )

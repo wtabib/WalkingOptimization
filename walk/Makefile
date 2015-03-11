@@ -1,7 +1,7 @@
 CURRENT_MAKEFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 WALK_BASE_PATH := $(abspath $(dir $(CURRENT_MAKEFILE_PATH))..)
 
-CC=gcc
+CC=gcc-4.7
 CFLAGS=-O3 -DWALK_BASE_PATH="\"$(WALK_BASE_PATH)\""
 XLIBS = -lX11 -lGL -lGLU -lstdc++
 

@@ -23,7 +23,7 @@
 #define QD_R_HIP 12
 #define QD_R_KNEE 13
 
-// Body index definitions (for sdpointf, etc.)
+/* Body index definitions (for sdpointf, etc.) */
 #define BODY_WORLD -1
 #define BODY_TORSO 0
 #define BODY_L_THIGH 1
@@ -31,7 +31,7 @@
 #define BODY_R_THIGH 3
 #define BODY_R_CALF 4
 
-// Joint index definitions (for sdhinget, etc.)
+/* Joint index definitions (for sdhinget, etc.) */
 #define JOINT_BODY_PLANAR 0
 #define JOINT_L_HIP 1
 #define JOINT_L_KNEE 2
@@ -58,7 +58,7 @@
 #define SS_HIP2D 8
 #define SS_KNEE2D 9
 
-// Body index definitions (for sdpointf, etc.)
+/* Body index definitions (for sdpointf, etc.)*/
 #define SS_GND_ID -1
 #define SS_CALF1_ID 0
 #define SS_THIGH1_ID 1
@@ -86,7 +86,7 @@
 #define DS_HIP2D 8
 #define DS_KNEE2D 9
 
-// Body index definitions (for sdpointf, etc.)
+/* Body index definitions (for sdpointf, etc.)*/
 #define DS_GND_ID -1
 #define DS_CALF1_ID 0
 #define DS_THIGH1_ID 1

@@ -61,7 +61,7 @@ init_default_parameters( SIM *s )
   s->vel_gains[R_ANKLE][R_ANKLE] = 0.0;
   s->int_gains[R_ANKLE][R_ANKLE] = 0.0;
 
-  // contact impedance parameters
+  /* contact impedance parameters*/
   s->gnd_k_z = 300000.0;
   s->gnd_b_z = 7000.0;
   s->gnd_k_x = 1000000.0;
@@ -70,7 +70,7 @@ init_default_parameters( SIM *s )
 
   s->knee_limit_k = 1000.0;
   s->knee_limit_b = 2.0;
-  s->knee_limit = -0.01; // Where is the hard knee stop?
+  s->knee_limit = -0.01; /* Where is the hard knee stop?*/
 
   s->wait_duration = 0.0;
 
@@ -236,8 +236,8 @@ a little low relative to a human, should be around 0.1
       s->hip_torque_max[i] = 100;
       s->knee_torque_min[i] = -100;
       s->knee_torque_max[i] = 100;
-      // this is a hack that assumes single support
-      // ankle torque is further limited by ZMP test in controller.c
+      /* this is a hack that assumes single support */
+      /* ankle torque is further limited by ZMP test in controller.c */
       s->ankle_torque_min[i] =
 	-s->ankle_to_toe*s->total_weight_in_newtons;
       s->ankle_torque_max[i] =

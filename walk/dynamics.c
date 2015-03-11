@@ -40,7 +40,7 @@ ankle +
 /************************************************************************/
 /* DEFINES */
 
-#define FEET_TOGETHER (1e-3) // Feet too close together to measure tilt
+#define FEET_TOGETHER (1e-3) /* Feet too close together to measure tilt*/
 
 #ifdef WIN32
 int isnan( double x )
@@ -110,8 +110,8 @@ static void forward_kinematics( SIM *s )
   s->knee_angled[LEFT] = -s->sdfast_state[QD_L_KNEE];
   s->knee_angled[RIGHT] = -s->sdfast_state[QD_R_KNEE];
 
-  // Since the ankle angles don't exist in the sdfast model, we have to
-  // compute them.
+  /* Since the ankle angles don't exist in the sdfast model, we have to
+	** compute them. */
   s->ankle_angle[LEFT] = s->pitch 
     - s->hip_angle[LEFT] - s->knee_angle[LEFT];
   s->ankle_angle[RIGHT] = s->pitch 
@@ -159,7 +159,7 @@ static void set_sdfast_state( SIM *s, double *sdfast_state )
 }
 
 /************************************************************************/
-// For debugging
+/* For debugging */
 
 b1gdump()
 {
@@ -281,7 +281,7 @@ void init_dynamics( SIM *s )
 
   s->status = OK;
 
-  // b1gdump();
+  /* b1gdump(); */
 
   b1gmass( BODY_TORSO, s->torso_mass );
   b1gmass( BODY_L_THIGH, s->thigh_mass );
@@ -326,7 +326,7 @@ void init_dynamics( SIM *s )
   b1gitj( BODY_L_CALF, vector );
   b1gitj( BODY_R_CALF, vector );
 
-  // b1gdump();
+  /* b1gdump(); */
 
   b1ginit(); /* initialize SDFAST model */
 
@@ -458,7 +458,7 @@ void integrate_one_time_step( SIM *s )
       return;
     }
 
-  // clear outstanding error flags
+  /* clear outstanding error flags */
   b1gclearerr();
 
   for( step = 0; step < s->sdfast_integration_steps_per_control_step; step++ )
@@ -469,7 +469,7 @@ void integrate_one_time_step( SIM *s )
       b1gprinterr(stderr);
 
       for( i = 0; i < NSTATE; i++ )
-	{ // isfinite() should have worked.
+	{ /* isfinite() should have worked. */
 	  if ( isnan( s->sdfast_state[i] ) || isinf( s->sdfast_state[i])
 	       || isnan( s->sdfast_stated[i] ) || isinf( s->sdfast_stated[i]) ) 
 	    {
@@ -502,20 +502,20 @@ void integrate_one_time_step( SIM *s )
 
 /****************************************************************/
 
-// Utility function to compute the ground force function.
+/* Utility function to compute the ground force function. */
 static 
-void compute_ground_force(double contactpos[3],  // contact position wrt world
-			  double contact_zero[3], // original contact point.
-			  double contactvel[3],  // contact velocity wrt world
-			  double bodypos[3],     // contact point wrt body
+void compute_ground_force(double contactpos[3],  /* contact position wrt world */
+			  double contact_zero[3], /* original contact point. */
+			  double contactvel[3],  /* contact velocity wrt world */
+			  double bodypos[3],     /* contact point wrt body */
 			  int body,            
-			  double force[3]) // resultant force vector wrt world
+			  double force[3]) /* resultant force vector wrt world */
 			  
 {
   int i;
-  double fvec[3];  // ground force vector in body coordintes
+  double fvec[3];  /* ground force vector in body coordintes */
 
-  // force only exists if foot is below ground level
+  /* force only exists if foot is below ground level */
   if ( contactpos[2] >= sim.ground_level )
     {
       for( i = 0; i < 3; i++ )
@@ -526,9 +526,10 @@ void compute_ground_force(double contactpos[3],  // contact position wrt world
       return;
     }
 
-  // Compute the desired ground force vector in the world coordinates.
+  /* Compute the desired ground force vector in the world coordinates.
+	** */
 
-  // Initialize original contact point. */
+  /* Initialize original contact point. */
   if ( contact_zero[ZZ] > sim.ground_level )
     {
       for( i = 0; i < 2; i++ )
@@ -538,11 +539,11 @@ void compute_ground_force(double contactpos[3],  // contact position wrt world
 
   force[XX] = (contact_zero[XX] - contactpos[XX])*sim.gnd_k_x
     - contactvel[XX] * sim.gnd_b_x;
-  force[YY] = 0.0;   // not relevant
+  force[YY] = 0.0;   /* not relevant */
   force[ZZ] = (sim.ground_level - contactpos[ZZ]) * sim.gnd_k_z 
     - contactvel[ZZ] * sim.gnd_b_z;
 
-  // ground can't pull down
+  /* ground can't pull down */
   if ( force[ZZ] <= 0 ) 
     {
       force[XX] = 0.0;
@@ -552,21 +553,21 @@ void compute_ground_force(double contactpos[3],  // contact position wrt world
       for( i = 0; i < 3; i++ )
 	contact_zero[i] = contactpos[i];
     }
-  // check for slipping caused by friction cone violation.
+  /* check for slipping caused by friction cone violation. */
   else if ( fabs( force[XX]/force[ZZ] ) > sim.friction_cone_limit )
     {
-      // This slip is probably overly strong. There would be some
-      // force and only partial motion in reality.
+      /* This slip is probably overly strong. There would be some */
+      /* force and only partial motion in reality. */
       force[XX] = 0.0;
       /* Simulate a slip: reset contact point. */
       for( i = 0; i < 3; i++ )
 	contact_zero[i] = contactpos[i];
     }
 
-  // transform the vector into body coordinates
+  /* transform the vector into body coordinates */
   b1gtrans(BODY_WORLD, force, body, fvec);
   
-  // apply to the model
+  /* apply to the model */
   b1gpointf(body, bodypos, fvec);
 
 }
@@ -580,8 +581,8 @@ times per integration step at any time or state. */
 void b1guforce( double t, double *q, double *u )
 {
   int i;
-  double force[3]; // force vector in world coordinates
-  double fvec[3];  // force vector in body coordinates
+  double force[3]; /* force vector in world coordinates */
+  double fvec[3];  /* force vector in body coordinates */
   double bodypos[3];
   double torque[3];
   double l_knee_torque = 0;
@@ -589,43 +590,41 @@ void b1guforce( double t, double *q, double *u )
   double foot[2][3];
   double footd[2][3];
 
-  // find the position and velocity of each foot point in the world frame
+  /* find the position and velocity of each foot point in the world frame
+	** */
   b1gpos( BODY_L_CALF, sim.foot_offset, foot[LEFT] );    
   b1gpos( BODY_R_CALF, sim.foot_offset, foot[RIGHT] );    
 
   b1gvel( BODY_L_CALF, sim.foot_offset, footd[LEFT] );    
   b1gvel( BODY_R_CALF, sim.foot_offset, footd[RIGHT] );    
 
-  // Apply ground forces to each foot as point forces.
+  /* Apply ground forces to each foot as point forces. */
   compute_ground_force( foot[LEFT], sim.foot_zero[LEFT], footd[LEFT],
 			sim.foot_offset, BODY_L_CALF, sim.ground_force[LEFT] );
   compute_ground_force( foot[RIGHT], sim.foot_zero[RIGHT], footd[RIGHT],
 			sim.foot_offset, BODY_R_CALF, sim.ground_force[RIGHT] );
 
-  // Apply horizontal perturbation to torso
+  /* Apply horizontal perturbation to torso */
   force[0] = sim.torso_perturbation;
   force[1] = 0.0;
   force[2] = 0.0;
   bodypos[0] = 0.0;
   bodypos[1] = 0.0;
   bodypos[2] = 0.0;
-  // transform the vector into body coordinates
+  /* transform the vector into body coordinates */
   b1gtrans( BODY_WORLD, force, BODY_TORSO, fvec );
-  // apply to the model
+  /* apply to the model */
   b1gpointf( BODY_TORSO, bodypos, fvec );
 
-  // Apply knee constraints
+  /* Apply knee constraints */
   if ( q[Q_L_KNEE] < sim.knee_limit )
     {
       l_knee_torque = - sim.knee_limit_k * (q[Q_L_KNEE] - sim.knee_limit) 
 	- sim.knee_limit_b * q[QD_L_KNEE];
-      // printf( "%g %g %g ", sim.time, q[Q_L_KNEE], l_knee_torque ); 
       if ( l_knee_torque < 0 )
 	l_knee_torque = 0;
-      // printf( "%g\n", l_knee_torque );
     } 
   l_knee_torque += -sim.knee_torque[LEFT];
-  // sim.knee_torque[LEFT] = -l_knee_torque;
 
   if ( q[Q_R_KNEE] < sim.knee_limit )
     {
@@ -635,15 +634,12 @@ void b1guforce( double t, double *q, double *u )
 	r_knee_torque = 0;
     } 
   r_knee_torque += -sim.knee_torque[RIGHT];
-  // sim.knee_torque[RIGHT] = -r_knee_torque;
 
   /* Apply joint torques */
   b1ghinget( 1, 0, -sim.hip_torque[LEFT] );
   b1ghinget( 2, 0, l_knee_torque );
-  // b1ghinget( 2, 0, -sim.knee_torque[LEFT] );
   b1ghinget( 3, 0, -sim.hip_torque[RIGHT] );
   b1ghinget( 4, 0, r_knee_torque );
-  // b1ghinget( 4, 0, -sim.knee_torque[RIGHT] );
 
   /* Apply ankle torques */
   torque[XX] = torque[ZZ] = 0;

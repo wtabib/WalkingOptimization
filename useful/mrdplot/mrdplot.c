@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-// #include <strings.h> // Does not exist on Windows
 #include <string.h>
 #include "mrdplot.h"
 
@@ -176,7 +175,6 @@ write_mrdplot_file( MRDPLOT_DATA *d )
   FILE *stream;
   int i;
 
-  // printf( "Writing %s\n", d->filename );
 
   /* Windows needs binary flag. No effect on Unix */
   stream = fopen( d->filename, "wb" );
@@ -198,10 +196,7 @@ write_mrdplot_file( MRDPLOT_DATA *d )
     {
       fprintf( stream, "%s %s\n", d->names[i], d->units[i] );
     }
-  // Linux version
   fprintf( stream, "\n\n" );
-  // Windows version needs this?
-  // fprintf( stream, "\r\r" );
 
   for( i = 0; i < d->n_points; i++ )
     {

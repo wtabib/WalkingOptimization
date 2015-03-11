@@ -457,7 +457,6 @@ int write_the_mrdplot_file( SIM *s )
 
   write_mrdplot_file( d );
 
-  // write_matlab_file( "dd" );
 
   return 0;
 }

@@ -3,12 +3,6 @@
 #include "stdio.h"
 #include "math.h"
 #include "malloc.h"
-//#include "string.h"
-//#ifndef VX
-//#include "strings.h"
-//#else
-//#include "vx_headers.h"
-//#endif
 #include "trajectory.h"
 
 /*****************************************************************************/

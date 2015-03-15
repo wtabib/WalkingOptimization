@@ -30,7 +30,7 @@ main( int argc, char **argv )
   if ( argc > 1 )
     {
       params = read_parameter_file( argv[1] );
-      n_parameters = process_parameters( params, &sim, 1 );
+      n_parameters = process_parameters( params, &sim, 0 );
       if ( n_parameters > MAX_N_PARAMETERS )
 	{
 	  fprintf( stderr, "Too many parameters %d > %d\n",

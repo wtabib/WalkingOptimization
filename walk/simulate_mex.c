@@ -66,31 +66,7 @@ void mexFunction( int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[] )
 
 
   params = read_parameter_file( "p1" );
-  n_parameters = process_parameters( params, &sim, 1 );
-  /*params->pointer = &((&sim)->swing_time); params = params->next;*/
-  /*sim.swing_time = *((double *)mxGetData(prhs[0]));
-  sim.thrust1 = *((double *)mxGetData(prhs[1]));
-  sim.swing_hip_target = *((double *)mxGetData(prhs[2]));
-  sim.swing_hv1 = *((double *)mxGetData(prhs[3]));
-  sim.swing_ha1 = *((double *)mxGetData(prhs[4]));
-  sim.swing_knee1 = *((double *)mxGetData(prhs[5]));
-  sim.swing_kv1 = *((double *)mxGetData(prhs[6]));
-  sim.swing_ka1 = *((double *)mxGetData(prhs[7]));
-  sim.swing_knee_target = *((double *)mxGetData(prhs[8]));
-  sim.swing_kv2 = *((double *)mxGetData(prhs[9]));
-  sim.swing_ka2 = *((double *)mxGetData(prhs[10]));
-  sim.stance_hip_target = *((double *)mxGetData(prhs[11]));
-  sim.stance_hv1 = *((double *)mxGetData(prhs[12]));
-  sim.stance_ha1 = *((double *)mxGetData(prhs[13]));
-  sim.pitch_d = *((double *)mxGetData(prhs[14]));
-  sim.stance_kv1 = *((double *)mxGetData(prhs[15]));
-  sim.stance_ka1 = *((double *)mxGetData(prhs[16]));
-  sim.stance_knee_target = *((double *)mxGetData(prhs[17]));
-  sim.stance_kv2 = *((double *)mxGetData(prhs[18]));
-  sim.stance_ka2 = *((double *)mxGetData(prhs[19]));
-  sim.stance_ankle_torque = *((double *)mxGetData(prhs[20]));
-  printf("sim.stance_ankle_torque = %g", sim.stance_ankle_torque);
-  return;*/
+  n_parameters = process_parameters( params, &sim, 0 );
 
   init_sim( &sim );
   init_data( &sim );
@@ -104,7 +80,7 @@ void mexFunction( int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[] )
       integrate_one_time_step( &sim );
     }
 
-  write_the_mrdplot_file( &sim );
+  /*write_the_mrdplot_file( &sim );*/
   get_score( &sim );
 
   int dimsOut[2];

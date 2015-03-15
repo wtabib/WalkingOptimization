@@ -168,52 +168,26 @@ b1gdump()
   double inertia[3][3];
 
   b1ggetmass( BODY_TORSO, &value );
-  printf( "Torso mass: %g\n", value );
   b1ggetmass( BODY_L_THIGH, &value );
-  printf( "L Thigh mass: %g\n", value );
   b1ggetmass( BODY_R_THIGH, &value );
-  printf( "R Thigh mass: %g\n", value );
   b1ggetmass( BODY_L_CALF, &value );
-  printf( "L Calf mass: %g\n", value );
   b1ggetmass( BODY_R_CALF, &value );
-  printf( "R Calf mass: %g\n", value );
 
   b1ggetiner( BODY_TORSO, inertia );
-  printf( "Torso I: %g\n", inertia[YY][YY] );
   b1ggetiner( BODY_L_THIGH, inertia );
-  printf( "L Thigh I: %g\n", inertia[YY][YY] );
   b1ggetiner( BODY_R_THIGH, inertia );
-  printf( "R Thigh I: %g\n", inertia[YY][YY] );
   b1ggetiner( BODY_L_CALF, inertia );
-  printf( "L Calf I: %g\n", inertia[YY][YY] );
   b1ggetiner( BODY_R_CALF, inertia );
-  printf( "R Calf I: %g\n", inertia[YY][YY] );
 
   b1ggetbtj( BODY_L_THIGH, vector );
-  printf( "L_THIGH BTJ: %g %g %g\n", vector[0],
-	  vector[1], vector[2] );
   b1ggetbtj( BODY_R_THIGH, vector );
-  printf( "R_THIGH BTJ: %g %g %g\n", vector[0],
-	  vector[1], vector[2] );
   b1ggetbtj( BODY_L_CALF, vector );
-  printf( "L_Calf BTJ: %g %g %g\n", vector[0],
-	  vector[1], vector[2] );
   b1ggetbtj( BODY_R_CALF, vector );
-  printf( "R_Calf BTJ: %g %g %g\n", vector[0],
-	  vector[1], vector[2] );
 
   b1ggetitj( BODY_L_THIGH, vector );
-  printf( "L_THIGH ITJ: %g %g %g\n", vector[0],
-	  vector[1], vector[2] );
   b1ggetitj( BODY_R_THIGH, vector );
-  printf( "R_THIGH ITJ: %g %g %g\n", vector[0],
-	  vector[1], vector[2] );
   b1ggetitj( BODY_L_CALF, vector );
-  printf( "L_Calf ITJ: %g %g %g\n", vector[0],
-	  vector[1], vector[2] );
   b1ggetitj( BODY_R_CALF, vector );
-  printf( "R_Calf ITJ: %g %g %g\n", vector[0],
-	  vector[1], vector[2] );
 }
 
 /************************************************************************/

@@ -653,8 +653,6 @@ run_state_machine( SIM *s )
 	{ /* do transition*/
 	  s->controller_state = LAUNCH1;
 	  s->state_start_time = s->time;
-	  if ( s->controller_print )
-	    printf( "LAUNCH1 %g\n", s->time );
 	  clear_all_knots( desired_trajectory, N_BIPED_DOFS );
 	  /* Lift and swing left leg */
 	  add_knot_point( desired_trajectory, L_HIP, QUINTIC_SPLINE, 
@@ -698,8 +696,6 @@ run_state_machine( SIM *s )
 	{
 	  s->controller_state = LAUNCH2;
 	  s->state_start_time = s->time;
-	  if ( s->controller_print )
-	    printf( "LAUNCH2 %g\n", s->time );
 	  /* Don't need to do anything here. */
 	  /* Eventually delete a launch state */
 	}
@@ -711,8 +707,6 @@ run_state_machine( SIM *s )
 	{
 	  s->controller_state = R_SWING;
 	  s->state_start_time = s->time;
-	  if ( s->controller_print )
-	    printf( "R_SWING %g\n", s->time );
 	  /* Swing right leg while moving left leg back. */
 	  reset_desireds( s );
 	  clear_knots( desired_trajectory, L_HIP );
@@ -732,8 +726,6 @@ run_state_machine( SIM *s )
 	{
 	  s->controller_state = RL_STANCE;
 	  s->state_start_time = s->time;
-	  if ( s->controller_print )
-	    printf( "RL_STANCE %g\n", s->time );
 	  reset_desireds( s );
 	  zero_velocity_desireds( s, LEFT );
 	  clear_knots( desired_trajectory, L_HIP );
@@ -749,8 +741,6 @@ run_state_machine( SIM *s )
 	{
 	  s->controller_state = R_SWING;
 	  s->state_start_time = s->time;
-	  if ( s->controller_print )
-	    printf( "R_SWING %g\n", s->time );
 	  reset_desireds( s );
 	  clear_knots( desired_trajectory, R_HIP );
 	  clear_knots( desired_trajectory, R_KNEE );
@@ -766,8 +756,6 @@ run_state_machine( SIM *s )
 	{
 	  s->controller_state = LR_STANCE;
 	  s->state_start_time = s->time;
-	  if ( s->controller_print )
-	    printf( "LR_STANCE %g\n", s->time );
 	  reset_desireds( s );
 	  zero_velocity_desireds( s, RIGHT );
 	  clear_knots( desired_trajectory, R_HIP );
@@ -783,8 +771,6 @@ run_state_machine( SIM *s )
 	{
 	  s->controller_state = L_SWING;
 	  s->state_start_time = s->time;
-	  if ( s->controller_print )
-	    printf( "L_SWING %g\n", s->time );
 	  reset_desireds( s );
 	  clear_knots( desired_trajectory, L_HIP );
 	  clear_knots( desired_trajectory, L_KNEE );
